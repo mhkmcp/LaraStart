@@ -204,15 +204,37 @@ export default {
         };
     },
     methods: {
-        loadUser() {
+        loadUsers() {
             axios.get("api/user").then(({ data }) => (this.users = data));
         },
         createUser() {
-            this.form.post("api/user");
+            this.$Progress.start();
+            this.form
+                .post("api/user")
+                .then(() => {
+                    Fire.$emit("AfterCreated");
+                    $("#addNew").modal("hide");
+
+                    Toast.fire({
+                        icon: "success",
+                        title: "User Created successfully"
+                    });
+                    this.$Progress.finish();
+                })
+                .catch(() => {
+                    Toast.fire({
+                        icon: "alert",
+                        title: "User Creation Failed!"
+                    });
+                });
         }
     },
     mounted() {
-        this.loadUser();
+        this.loadUsers();
+        Fire.$on("AfterCreated", () => {
+            this.loadUsers();
+        });
+        // setInterval(() => this.loadUsers(), 2000);
     }
 };
 </script>

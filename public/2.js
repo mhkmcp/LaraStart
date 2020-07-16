@@ -214,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    loadUser: function loadUser() {
+    loadUsers: function loadUsers() {
       var _this = this;
 
       axios.get("api/user").then(function (_ref) {
@@ -223,11 +223,33 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
-      this.form.post("api/user");
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.post("api/user").then(function () {
+        Fire.$emit("AfterCreated");
+        $("#addNew").modal("hide");
+        Toast.fire({
+          icon: "success",
+          title: "User Created successfully"
+        });
+
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        Toast.fire({
+          icon: "alert",
+          title: "User Creation Failed!"
+        });
+      });
     }
   },
   mounted: function mounted() {
-    this.loadUser();
+    var _this3 = this;
+
+    this.loadUsers();
+    Fire.$on("AfterCreated", function () {
+      _this3.loadUsers();
+    }); // setInterval(() => this.loadUsers(), 2000);
   }
 });
 

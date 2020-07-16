@@ -1,16 +1,52 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+import Swal from "sweetalert2";
 import moment from "moment";
+import VueProgressBar from "vue-progressbar";
 import { Form, HasError, AlertError } from "vform";
 
 window.Form = Form;
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    onOpen: toast => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    }
+});
+
+window.Toast = Toast;
 
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+// let Fire = new Vue();
+window.Fire = new Vue();
+
+const options = {
+    color: "#bffaf3",
+    failedColor: "#874b4b",
+    thickness: "5px",
+    transition: {
+        speed: "2s",
+        opacity: "0.8s",
+        termination: 700
+    },
+    autoRevert: true,
+    location: "top",
+    inverse: false
+};
+
+Vue.use(VueProgressBar, options);
 
 const routes = [
     {
