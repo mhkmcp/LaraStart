@@ -30097,8 +30097,11 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
+<<<<<<< HEAD
 .router-link-exact-active {
   color: white !important;
   background: #3f51b5;
 }
 
+=======
+>>>>>>> 7ac46d61306bdda090c934230b8effd5b3e2ce06
