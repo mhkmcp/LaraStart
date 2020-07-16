@@ -1,23 +1,30 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require("./bootstrap");
 
 window.Vue = require("vue");
+import moment from "moment";
+import { Form, HasError, AlertError } from "vform";
+
+window.Form = Form;
 
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
 const routes = [
     {
         path: "/dashboard",
         component: () => import("./components/Dashboard.vue")
     },
-    { path: "/profile", component: () => import("./components/Profile.vue") }
+    {
+        path: "/profile",
+        component: () => import("./components/Profile.vue")
+    },
+    {
+        path: "/users",
+        component: () => import("./components/Users.vue")
+    }
 ];
 /**
  * Components should be either of
@@ -29,13 +36,14 @@ const router = new VueRouter({
     mode: "history",
     routes // short for `routes: routes`
 });
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+
+Vue.filter("capital", function(text) {
+    return text[0].toUpperCase() + text.slice(1);
+});
+
+Vue.filter("myDate", function(created) {
+    return moment(created).format("MMMM Do YYYY");
+});
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
