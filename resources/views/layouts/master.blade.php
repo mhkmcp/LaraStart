@@ -185,7 +185,7 @@
   <!-- ./wrapper -->
 
 
-<script src="/js/app.js"></script>
+<script src="/js/app.js" type="application/javascript"></script>
 
 </body>
 </html>
