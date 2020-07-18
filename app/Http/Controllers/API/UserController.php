@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Illuminate\Auth\Access\Gate;
 
 class UserController extends Controller
 {
@@ -21,7 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $this->authorize('isAdmin');
+        // if (Gate::allows('isAdmin') || Gate::allows('isAuthor')) {
+        return User::latest()->paginate(3);
+        // }
+        // return User::all();
         // return User::latest()->pagination(10);
 
     }
@@ -126,6 +131,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
+
         $user = User::findOrFail($id);
 
         $user->delete();

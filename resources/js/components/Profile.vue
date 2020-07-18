@@ -461,7 +461,12 @@ export default {
     },
     methods: {
         getProfilePhoto() {
-            return "img/profile/" + this.form.photo;
+            // x > 100 => Base64 photo or newly added photo
+            let photo =
+                this.form.photo.length > 100
+                    ? this.form.photo
+                    : "img/profile/" + this.form.photo;
+            return photo;
         },
         updateProfile(e) {
             let file = e.target.files[0];

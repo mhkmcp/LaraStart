@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-4">
+        <div class="row mt-4" v-if="$gate.isAdminOrAuthor()">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header pt-3">
@@ -29,8 +29,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(user, index) in users" :key="index">
-                                    <td>{{ user.id }}</td>
+                                <tr
+                                    v-for="(user, index) in users.data"
+                                    :key="index"
+                                >
+                                    <td>{{ index + 1 }}</td>
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>
@@ -53,9 +56,19 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <pagination
+                            :data="users"
+                            @pagination-change-page="getResults"
+                        ></pagination>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
+        </div>
+
+        <div v-if="!$gate.isAdminOrAuthor()">
+            <not-found></not-found>
         </div>
 
         <!-- Modal -->
@@ -227,6 +240,11 @@ export default {
         };
     },
     methods: {
+        getResults(page = 1) {
+            axios.get("api/user?page=" + page).then(response => {
+                this.users = response.data;
+            });
+        },
         newModal(user = "none") {
             this.form.reset();
             if (user != "none") {
@@ -270,7 +288,9 @@ export default {
             });
         },
         loadUsers() {
-            axios.get("api/user").then(({ data }) => (this.users = data));
+            if (this.$gate.isAdminOrAuthor()) {
+                axios.get("api/user").then(({ data }) => (this.users = data));
+            }
         },
         updateUser() {
             this.$Progress.start();

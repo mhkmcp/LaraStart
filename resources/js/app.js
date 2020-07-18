@@ -6,6 +6,9 @@ import moment from "moment";
 import VueProgressBar from "vue-progressbar";
 import { Form, HasError, AlertError } from "vform";
 
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
 window.Form = Form;
 window.Swal = Swal;
 
@@ -65,6 +68,10 @@ const routes = [
         path: "/users",
         component: () => import("./components/Users.vue")
     }
+    // {
+    //     path: "/not-found",
+    //     component: () => import("./components/NotFound.vue")
+    // }
 ];
 /**
  * Components should be either of
@@ -113,6 +120,10 @@ Vue.component(
     "passport-personal-access-tokens",
     require("./components/passport/PersonalAccessTokens.vue").default
 );
+
+Vue.component("not-found", require("./components/NotFound.vue").default);
+
+Vue.component("pagination", require("laravel-vue-pagination"));
 
 const app = new Vue({
     el: "#app",
