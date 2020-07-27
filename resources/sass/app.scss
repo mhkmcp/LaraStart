@@ -20,3 +20,24 @@ $fa-font-path: "../webfonts";
     color: white !important;
     background: #3f51b5;
 }
+
+@media print {
+    .nav.nav-tabs li:not(.active) {
+        display: none;
+    }
+    .invoice {
+        padding: 10px 20px;
+    }
+
+    .invoice {
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    .table-responsive table {
+        background-color: transparent !important;
+    }
+}
+
+@page {
+    margin: 0;
+}

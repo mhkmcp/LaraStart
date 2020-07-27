@@ -82117,11 +82117,12 @@ var routes = [{
   component: function component() {
     return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/Users.vue */ "./resources/js/components/Users.vue"));
   }
-} // {
-//     path: "/not-found",
-//     component: () => import("./components/NotFound.vue")
-// }
-];
+}, {
+  path: "*",
+  component: function component() {
+    return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+  }
+}];
 /**
  * Components should be either of
 () => import("./components/Dashboard.vue") 
@@ -82155,7 +82156,19 @@ Vue.component("not-found", __webpack_require__(/*! ./components/NotFound.vue */ 
 Vue.component("pagination", __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
 var app = new Vue({
   el: "#app",
-  router: router
+  router: router,
+  data: {
+    search: ""
+  },
+  methods: {
+    searchit: _.debounce(function () {
+      console.log("searching UP");
+      Fire.$emit("searching");
+    }, 1000),
+    printme: function printme() {
+      window.print();
+    }
+  }
 });
 
 /***/ }),

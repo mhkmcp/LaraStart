@@ -16,10 +16,10 @@
                         style="background: url('img/back.jpg') center center;"
                     >
                         <h3 class="widget-user-username text-right">
-                            Humayun Kabir
+                            {{ this.form.name }}
                         </h3>
                         <h5 class="widget-user-desc text-right">
-                            Web Developer
+                            {{ this.form.type }}
                         </h5>
                     </div>
                     <div class="widget-user-image">

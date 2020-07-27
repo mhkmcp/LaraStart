@@ -67,11 +67,11 @@ const routes = [
     {
         path: "/users",
         component: () => import("./components/Users.vue")
+    },
+    {
+        path: "*",
+        component: () => import("./components/NotFound.vue")
     }
-    // {
-    //     path: "/not-found",
-    //     component: () => import("./components/NotFound.vue")
-    // }
 ];
 /**
  * Components should be either of
@@ -127,5 +127,18 @@ Vue.component("pagination", require("laravel-vue-pagination"));
 
 const app = new Vue({
     el: "#app",
-    router
+    router,
+    data: {
+        search: ""
+    },
+    methods: {
+        searchit: _.debounce(() => {
+            console.log("searching UP");
+            Fire.$emit("searching");
+        }, 1000),
+
+        printme() {
+            window.print();
+        }
+    }
 });

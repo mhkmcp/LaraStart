@@ -206,33 +206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -343,6 +316,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this6 = this;
 
+    Fire.$on("searching", function () {
+      var query = _this6.$parent.search;
+      axios("api/findUser?q=" + query).then(function (data) {
+        _this6.users = data.data;
+      })["catch"](function () {});
+    });
     this.loadUsers();
     Fire.$on("AfterCreated", function () {
       _this6.loadUsers();
@@ -373,7 +352,7 @@ var render = function() {
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header pt-3" }, [
-                _c("h3", { staticClass: "card-title  green" }, [
+                _c("h3", { staticClass: "card-title green" }, [
                   _vm._v("Users Table")
                 ]),
                 _vm._v(" "),
@@ -389,7 +368,7 @@ var render = function() {
                       }
                     },
                     [
-                      _vm._v("\n                            Add New "),
+                      _vm._v("\n              Add New "),
                       _c("i", { staticClass: "fas fa-user-plus fa-fw" })
                     ]
                   )
@@ -433,9 +412,7 @@ var render = function() {
                             },
                             [_c("i", { staticClass: "fas fa-edit green" })]
                           ),
-                          _vm._v(
-                            "\n                                    /\n                                    "
-                          ),
+                          _vm._v("\n                  /\n                  "),
                           _c(
                             "a",
                             {
@@ -497,11 +474,7 @@ var render = function() {
                       staticClass: "modal-title purple",
                       attrs: { id: "addNewLabel" }
                     },
-                    [
-                      _vm._v(
-                        "\n                        Update User\n                    "
-                      )
-                    ]
+                    [_vm._v("\n            Update User\n          ")]
                   )
                 : _c(
                     "h5",
@@ -509,11 +482,7 @@ var render = function() {
                       staticClass: "modal-title purple",
                       attrs: { id: "addNewLabel" }
                     },
-                    [
-                      _vm._v(
-                        "\n                        Add New\n                    "
-                      )
-                    ]
+                    [_vm._v("\n            Add New\n          ")]
                   ),
               _vm._v(" "),
               _vm._m(1)
@@ -756,11 +725,7 @@ var render = function() {
                       staticClass: "btn btn-danger",
                       attrs: { type: "submit", "data-dismiss": "modal" }
                     },
-                    [
-                      _vm._v(
-                        "\n                            Close\n                        "
-                      )
-                    ]
+                    [_vm._v("\n              Close\n            ")]
                   ),
                   _vm._v(" "),
                   _vm.editMode === true
@@ -770,11 +735,7 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           attrs: { type: "submit" }
                         },
-                        [
-                          _vm._v(
-                            "\n                            Update\n                        "
-                          )
-                        ]
+                        [_vm._v("\n              Update\n            ")]
                       )
                     : _c(
                         "button",
@@ -782,11 +743,7 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           attrs: { type: "submit" }
                         },
-                        [
-                          _vm._v(
-                            "\n                            Create\n                        "
-                          )
-                        ]
+                        [_vm._v("\n              Create\n            ")]
                       )
                 ])
               ]
